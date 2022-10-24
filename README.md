@@ -1,11 +1,8 @@
 # desafio-extra-sidelab
 Desafio extra criando sistema de login
-
-
 ## Sistema de login
 
 PARTE 01
-
 ### Funcionalidades:
 
 - Banco em memória
