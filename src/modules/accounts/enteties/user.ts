@@ -2,9 +2,10 @@ import { uuid } from 'uuidv4';
 
 export class User {
 
-  id: string;
+  id?: string;
   name: string;
   email: string;
+  phone: string;
   password: string;
 
   constructor() {

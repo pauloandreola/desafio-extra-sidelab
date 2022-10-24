@@ -1,10 +1,8 @@
 import { Router } from "express";
 
-import { CreateUserController } from "../modules/accounts/useCases/createUser/createUserController";
+import { createUserController } from "../modules/accounts/useCases/createUser/index";
 
 export const usersRoutes = Router();
-
-const createUsersController = new CreateUserController();
 
 usersRoutes.delete("/");
 
@@ -12,6 +10,6 @@ usersRoutes.get("/");
 
 usersRoutes.patch("/");
 
-usersRoutes.post("/");
+usersRoutes.post("/", createUserController.handle);
 
 usersRoutes.put("/");
