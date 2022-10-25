@@ -34,9 +34,9 @@ export class UsersRepository implements IUsersRepository {
     throw new Error('Method not implemented.');
   }
 
-  async findByEmail(email: string): Promise<void> {
-    const user = this.users.find((user) => user.email == email);
-    user;
+  findByEmail(email: string): User {
+    const user = this.users.find((user) => user.email === email);
+    return user as any;
   }
 
   findById(id: string): void {
