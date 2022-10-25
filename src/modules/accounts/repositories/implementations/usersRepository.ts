@@ -46,7 +46,7 @@ export class UsersRepository implements IUsersRepository {
 
   list(): User[] {
     return this.users;
-   }
+  }
 
   updateOne(data: User): User {
     throw new Error('Method not implemented.');

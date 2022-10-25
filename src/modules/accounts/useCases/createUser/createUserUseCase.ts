@@ -1,17 +1,20 @@
+import { hash } from "bcrypt";
 import { ICreateUserDTO } from "../../dtos/iCreateUserDTO";
 import { IUsersRepository } from "../../repositories/iUsersRepository";
 
 export class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  execute({name, email, phone, password}: ICreateUserDTO): void {
-    const userAlreadyExists = this.usersRepository.findByEmail(email);
+    async execute({name, email, phone, password}: ICreateUserDTO): Promise<void> {
+      const userAlreadyExists = this.usersRepository.findByEmail(email);
 
-      if(userAlreadyExists) {
-      throw new Error('User already exists!');
-      }
+        if(userAlreadyExists) {
+        throw new Error('User already exists!');
+        }
 
-    this.usersRepository.create({name, email, phone, password});
+        const passwordHash = await hash(password, 4);
+        
+      this.usersRepository.create({name, email, phone, password: passwordHash});
 
     }
  }
