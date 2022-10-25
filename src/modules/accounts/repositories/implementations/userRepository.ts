@@ -2,6 +2,9 @@ import { ICreateUserDTO } from '../../dtos/iCreateUserDTO';
 import { User } from '../../enteties/user';
 import { IUsersRepository } from '../iUsersRepository';
 export class UsersRepository implements IUsersRepository {
+  static list() {
+    throw new Error("Method not implemented.");
+  }
   private static INSTANCE: UsersRepository;
 
   private users: User[];
@@ -33,7 +36,7 @@ export class UsersRepository implements IUsersRepository {
     throw new Error('Method not implemented.');
   }
 
-  async findByEmail(email: string): Promise<any> {
+  async findByEmail(email: string): Promise<void> {
     const user = this.users.find((user) => user.email === email);
     user;
   }

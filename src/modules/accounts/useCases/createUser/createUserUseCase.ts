@@ -3,21 +3,17 @@ import { ICreateUserDTO } from "../../dtos/iCreateUserDTO";
 import { IUsersRepository } from "../../repositories/iUsersRepository";
 
 export class CreateUserUseCase {
-  
-  constructor(private usersRepository:IUsersRepository ) {}
+   constructor(private usersRepository:IUsersRepository ) {}
 
-  async execute({ name, email, phone, password }: ICreateUserDTO): Promise<void> {
+    execute({name, email, phone, password}: ICreateUserDTO): void {
 
-    const userAlreadyExists = await this.usersRepository.findByEmail(email);
-    
-    if( userAlreadyExists) {
-      throw new Error('User already exists');
+      const userAlreadyExists = this.usersRepository.findByEmail(email);
+      
+      if(!userAlreadyExists) {
+        throw new Error('User already exists!');
+      }
+
+      this.usersRepository.create({name, email, phone, password});
+
     }
-
-    const passwordHash = await hash(password, 8);
-
-    const user = this.usersRepository.create({ name, email, phone, password });
-
-    return user;
-  }
  }
