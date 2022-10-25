@@ -1,17 +1,14 @@
-import { request, response, Router } from "express";
-import { User } from "../modules/accounts/enteties/user";
-import { UsersRepository } from "../modules/accounts/repositories/implementations/userRepository";
+import { Router } from "express";
 
-import { createUserController } from "../modules/accounts/useCases/createUser/index";
+import { createUserController } from "../modules/accounts/useCases/createUser";
+import { listUsersController } from "../modules/accounts/useCases/listUsers";
 
 export const usersRoutes = Router();
 
 usersRoutes.delete("/");
 
 usersRoutes.get("/", (request, response) => {
-  const all = UsersRepository.list();
-
-  return response.json(all);
+  return listUsersController.handle(request, response);
 });
 
 usersRoutes.patch("/");
