@@ -12,7 +12,7 @@ export class CreateUserUseCase {
         throw new Error('User already exists!');
         }
 
-        const passwordHash = await hash(password, 4);
+        const passwordHash = await hash(password, 8);
         
       this.usersRepository.create({name, email, phone, password: passwordHash});
 
