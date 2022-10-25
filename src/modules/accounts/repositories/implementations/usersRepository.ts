@@ -3,10 +3,9 @@ import { User } from '../../enteties/user';
 import { IUsersRepository } from '../iUsersRepository';
 
 export class UsersRepository implements IUsersRepository {
+  private users: User[];
 
   private static INSTANCE: UsersRepository;
-
-  private users: User[];
 
   private constructor() {
     this.users = [];
@@ -20,7 +19,7 @@ export class UsersRepository implements IUsersRepository {
     return UsersRepository.INSTANCE;
   }
  
-  async create({ name, email, phone, password }: ICreateUserDTO): Promise<void> {
+  create({ name, email, phone, password }: ICreateUserDTO): void {
     const user = new User();
     
     Object.assign(user, { name, email, phone, password });
@@ -46,8 +45,8 @@ export class UsersRepository implements IUsersRepository {
   }
 
   list(): User[] {
-    throw new Error('Method not implemented.');
-  }
+    return this.users;
+   }
 
   updateOne(data: User): User {
     throw new Error('Method not implemented.');
