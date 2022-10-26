@@ -1,5 +1,5 @@
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -10,7 +10,7 @@ interface IRequest {
   password: string;
 }
 
-interface IResponseToken {
+interface IResponse {
   user: {
     name: string,
     email: string
@@ -22,7 +22,7 @@ export class AuthenticateUserUseCase {
 
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute({ email, password }: IRequest): Promise<IResponseToken> {
+  async execute({ email, password }: IRequest): Promise<IResponse> {
     const userAuth = await this.usersRepository.findByEmail(email);
 
     if(!userAuth) {
@@ -32,23 +32,20 @@ export class AuthenticateUserUseCase {
     const passwordMatch = await compare(password, userAuth.password);
 
     if(!passwordMatch) {
-      throw new Error("Email ou password incorrect!");
+      throw new Error("Password or email incorrect!");
     }
 
     // Geração de Token
-    const token = sign({}, secret, { subject: userAuth.email, expiresIn: "1d" });
-
-    console.log(token);
+    const token = jwt.sign({}, secret, { subject: userAuth.email, expiresIn: "1d" });
 
     // Retorna para função
-    const tokenReturn: IResponseToken = {
+    const tokenReturn: IResponse = {
       token,
       user: {
         name: userAuth.name,
         email: userAuth.email
       }
     }
-
     return tokenReturn;
 
   }

@@ -5,7 +5,7 @@ import { IUsersRepository } from "../../repositories/iUsersRepository";
 export class CreateUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute({name, email, phone, password}: ICreateUserDTO): Promise<void> {
+  async execute({name, surname, email, phone, password}: ICreateUserDTO): Promise<void> {
     const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
       if(userAlreadyExists) {
@@ -14,7 +14,6 @@ export class CreateUserUseCase {
 
       const passwordHash = await hash(password, 8);
       
-    this.usersRepository.create({name, email, phone, password: passwordHash});
-
+    this.usersRepository.create({name, surname, email, phone, password: passwordHash});
   }
  }

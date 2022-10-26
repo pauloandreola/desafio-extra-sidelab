@@ -6,4 +6,4 @@ import { authenticateRoutes } from './authenticate.routes';
 export const router = Router();
 
 router.use("/users", usersRoutes);
-router.use("/login", authenticateRoutes);
+router.use(authenticateRoutes);

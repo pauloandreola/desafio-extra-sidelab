@@ -7,10 +7,14 @@ export class CreateUserController {
   constructor(private createUserUseCase: CreateUserUseCase) {}
 
   handle(request: Request, response: Response): Response  {
-    const { name, email, phone, password } = request.body;
+    const { name, surname, email, phone, password, confpass } = request.body;
 
-    this.createUserUseCase.execute({ name, email, phone, password });
+    if(password != confpass) {
+      throw new Error("Password is diferent")
+    }
 
-    return response.status(201).send("User created");
+    this.createUserUseCase.execute({ name, surname, email, phone, password });
+
+    return response.status(201).json();
   }
 }

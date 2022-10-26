@@ -8,10 +8,8 @@ export class AuthenticateUserController {
 
   async handle(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
-
-    // const authenticateUserUseCase = this.authenticateUserUseCase.resolve(AuthenticateUserUseCase);
     
-   const token = this.authenticateUserUseCase.execute({email, password});
+   const token = await this.authenticateUserUseCase.execute({email, password});
 
     return response.json(token);
   }
